@@ -11,7 +11,7 @@ services:
     ports:
       - "9092:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - rocketponto_postgres_data:/var/lib/postgresql/data
     networks:
       - rocketponto-network
     restart: unless-stopped
@@ -26,4 +26,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  rocketponto_postgres_data:
+    driver: local
