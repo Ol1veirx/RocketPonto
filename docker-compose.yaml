@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: rocketponto-db
+    environment:
+      POSTGRES_DB: rocketponto
+      POSTGRES_USER: rocket
+      POSTGRES_PASSWORD: rocket
+    ports:
+      - "9092:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rocketponto-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rocket -d rocketponto"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  rocketponto-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
