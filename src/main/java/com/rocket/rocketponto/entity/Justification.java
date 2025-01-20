@@ -33,4 +33,52 @@ public class Justification {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private JustificationStatus status;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PointRecord getPointRecord() {
+        return pointRecord;
+    }
+
+    public void setPointRecord(PointRecord pointRecord) {
+        this.pointRecord = pointRecord;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getSendDate() {
+        return sendDate;
+    }
+
+    public void setSendDate(LocalDateTime sendDate) {
+        this.sendDate = sendDate;
+    }
+
+    public JustificationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(JustificationStatus status) {
+        this.status = status;
+    }
 }
