@@ -3,15 +3,19 @@ package com.rocket.rocketponto.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -111,5 +115,41 @@ public class User {
 
     public void setPointRecord(List<PointRecord> pointRecord) {
         this.pointRecord = pointRecord;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Retorna os papéis (roles) do usuário. Se não houver roles, retorna uma lista vazia.
+        return Collections.emptyList();
+    }
+
+    @Override
+    public String getUsername() {
+        // O Spring Security usa o email como nome de usuário (username) para autenticação.
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // Verifica se a conta do usuário não expirou.
+        return true; // Ou implemente lógica personalizada, se necessário.
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // Verifica se a conta do usuário não está bloqueada.
+        return true; // Ou implemente lógica personalizada, se necessário.
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // Verifica se as credenciais do usuário não expiraram.
+        return true; // Ou implemente lógica personalizada, se necessário.
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // Verifica se o usuário está ativo.
+        return this.active;
     }
 }
