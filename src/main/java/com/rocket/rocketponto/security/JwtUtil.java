@@ -14,8 +14,13 @@ public class JwtUtil {
 
     private JwtConfig jwtConfig;
 
-    public String generateToken(String username) {
+    public JwtUtil(JwtConfig jwtConfig) {
+        this.jwtConfig = jwtConfig;
+    }
+
+    public String generateToken(String username, Long userId) {
         return Jwts.builder()
+                .setId(userId.toString())
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtConfig.getExpiration()))

@@ -28,19 +28,17 @@ public class PointRecordService {
 
         PointRecord lastPointRecord = pointRecordRepository.findTopByUserOrderByEntryDateHourDesc(userExists);
 
-        PointRecord pointRecord = new PointRecord();
-        pointRecord.setUser(userExists);
+
 
         if (lastPointRecord == null || lastPointRecord.getExitDateHour() != null) {
+            PointRecord pointRecord = new PointRecord();
+            pointRecord.setUser(userExists);
             pointRecord.setEntryDateHour(LocalDateTime.now());
             pointRecord.setExitDateHour(null);
+            return pointRecordRepository.save(pointRecord);
         } else {
-            pointRecord.setEntryDateHour(lastPointRecord.getEntryDateHour());
-            pointRecord.setExitDateHour(LocalDateTime.now());
+            lastPointRecord.setExitDateHour(LocalDateTime.now());
+            return pointRecordRepository.save(lastPointRecord);
         }
-
-        pointRecord.setJustification(null);
-
-        return pointRecordRepository.save(pointRecord);
     }
 }

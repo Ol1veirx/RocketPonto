@@ -43,8 +43,8 @@ public class AuthController {
         );
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
-
-        return jwtUtil.generateToken(userDetails.getUsername());
+        User userId = userRepository.findByEmail(authRequest.getUsername()).get();
+        return jwtUtil.generateToken(userDetails.getUsername(), userId.getId());
     }
 
     @PostMapping("/register")
