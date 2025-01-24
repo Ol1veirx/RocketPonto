@@ -56,10 +56,10 @@ public class AuthController {
         User user = new User();
         user.setName(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword())); // Criptografa a senha
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setPosition(registerRequest.getPosition());
         user.setDepartment(registerRequest.getDepartment());
-        user.setActive(true); // Usuário ativo por padrão
+        user.setActive(true);
         user.setCreatedDate(LocalDateTime.now());
 
         userRepository.save(user);

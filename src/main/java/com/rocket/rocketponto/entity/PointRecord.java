@@ -1,5 +1,6 @@
 package com.rocket.rocketponto.entity;
 
+import com.rocket.rocketponto.enums.PointRecordStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,10 @@ public class PointRecord {
 
     @Column
     private LocalDateTime exitDateHour;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private PointRecordStatus pointRecordStatus;
 
     @OneToOne(mappedBy = "pointRecord", cascade = CascadeType.ALL)
     private Justification justification;
@@ -68,5 +73,13 @@ public class PointRecord {
 
     public void setJustification(Justification justification) {
         this.justification = justification;
+    }
+
+    public PointRecordStatus getPointRecordStatus() {
+        return pointRecordStatus;
+    }
+
+    public void setPointRecordStatus(PointRecordStatus pointRecordStatus) {
+        this.pointRecordStatus = pointRecordStatus;
     }
 }

@@ -1,6 +1,7 @@
 package com.rocket.rocketponto.dto;
 
 import com.rocket.rocketponto.entity.Justification;
+import com.rocket.rocketponto.enums.PointRecordStatus;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,8 +14,13 @@ public class ListPointRecordDTO {
     private LocalDateTime entryDateHour;
     private LocalDateTime exitDateHour;
     private String justification;
+    private PointRecordStatus pointRecordStatus;
 
-    public ListPointRecordDTO(Long id, LocalDateTime entryDateHour, LocalDateTime exitDateHour, String justification) {
+    public ListPointRecordDTO(Long id,
+                              LocalDateTime entryDateHour,
+                              LocalDateTime exitDateHour,
+                              String justification,
+                              PointRecordStatus pointRecordStatus) {
         this.id = id;
         this.entryDateHour = entryDateHour;
         this.exitDateHour = exitDateHour;
@@ -56,5 +62,13 @@ public class ListPointRecordDTO {
 
     public void setJustification(String justification) {
         this.justification = justification;
+    }
+
+    public PointRecordStatus getPointRecordStatus() {
+        return pointRecordStatus;
+    }
+
+    public void setPointRecordStatus(PointRecordStatus pointRecordStatus) {
+        this.pointRecordStatus = pointRecordStatus;
     }
 }

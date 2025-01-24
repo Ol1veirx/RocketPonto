@@ -3,6 +3,7 @@ package com.rocket.rocketponto.services;
 import com.rocket.rocketponto.dto.ListPointRecordDTO;
 import com.rocket.rocketponto.entity.PointRecord;
 import com.rocket.rocketponto.entity.User;
+import com.rocket.rocketponto.enums.PointRecordStatus;
 import com.rocket.rocketponto.repositories.PointRecordRepository;
 import com.rocket.rocketponto.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,9 +39,11 @@ public class PointRecordService {
             pointRecord.setUser(userExists);
             pointRecord.setEntryDateHour(LocalDateTime.now());
             pointRecord.setExitDateHour(null);
+            pointRecord.setPointRecordStatus(PointRecordStatus.IN_PROGRESS);
             return pointRecordRepository.save(pointRecord);
         } else {
             lastPointRecord.setExitDateHour(LocalDateTime.now());
+            lastPointRecord.setPointRecordStatus(PointRecordStatus.COMPLETED);
             return pointRecordRepository.save(lastPointRecord);
         }
     }
@@ -57,6 +60,7 @@ public class PointRecordService {
                     dto.setId(pointRecord.getId());
                     dto.setEntryDateHour(pointRecord.getEntryDateHour());
                     dto.setExitDateHour(pointRecord.getExitDateHour());
+                    dto.setPointRecordStatus(pointRecord.getPointRecordStatus());
                     dto.setJustification(pointRecord.getJustification() != null ? pointRecord.getJustification().getDescription() : null);
                     return dto;
                 })
