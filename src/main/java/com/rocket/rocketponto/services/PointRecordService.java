@@ -52,12 +52,14 @@ public class PointRecordService {
         List<PointRecord> pointsRecords = pointRecordRepository.findByUser(user);
 
         return pointsRecords.stream()
-                .map(pointRecord -> new ListPointRecordDTO(
-                        pointRecord.getId(),
-                        pointRecord.getEntryDateHour().toString(),
-                        pointRecord.getExitDateHour() != null ? pointRecord.getExitDateHour().toString() : null,
-                        pointRecord.getJustification()
-                ))
+                .map(pointRecord -> {
+                    ListPointRecordDTO dto = new ListPointRecordDTO();
+                    dto.setId(pointRecord.getId());
+                    dto.setEntryDateHour(pointRecord.getEntryDateHour());
+                    dto.setExitDateHour(pointRecord.getExitDateHour());
+                    dto.setJustification(pointRecord.getJustification() != null ? pointRecord.getJustification().getDescription() : null);
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 }

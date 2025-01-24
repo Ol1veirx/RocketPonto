@@ -5,33 +5,36 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public class ListPointRecordDTO {
     private Long id;
-    private String entryDateHour;
-    private String exitDateHour;
+    private LocalDateTime entryDateHour;
+    private LocalDateTime exitDateHour;
     private String justification;
 
-    public ListPointRecordDTO(Long id, String entryDateHour, String exitDateHour, String justification) {
+    public ListPointRecordDTO(Long id, LocalDateTime entryDateHour, LocalDateTime exitDateHour, String justification) {
         this.id = id;
         this.entryDateHour = entryDateHour;
         this.exitDateHour = exitDateHour;
         this.justification = justification;
     }
 
+    public ListPointRecordDTO() {}
+
     public ListPointRecordDTO(Long id, String string, String exitDateHour, Justification justification) {
     }
-
 
     public Long getId() {
         return id;
     }
 
-    public String getEntryDateHour() {
+    public LocalDateTime getEntryDateHour() {
         return entryDateHour;
     }
 
-    public String getExitDateHour() {
+    public LocalDateTime getExitDateHour() {
         return exitDateHour;
     }
 
@@ -43,11 +46,11 @@ public class ListPointRecordDTO {
         this.id = id;
     }
 
-    public void setEntryDateHour(String entryDateHour) {
+    public void setEntryDateHour(LocalDateTime entryDateHour) {
         this.entryDateHour = entryDateHour;
     }
 
-    public void setExitDateHour(String exitDateHour) {
+    public void setExitDateHour(LocalDateTime exitDateHour) {
         this.exitDateHour = exitDateHour;
     }
 
