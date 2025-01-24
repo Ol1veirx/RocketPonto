@@ -22,11 +22,11 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final com.rocket.rocketponto.service.UserDetailsServiceImpl userDetailsService;
+    private final com.rocket.rocketponto.security.UserDetailsServiceImpl userDetailsService;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, com.rocket.rocketponto.service.UserDetailsServiceImpl userDetailsService, UserRepository userRepository) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, com.rocket.rocketponto.security.UserDetailsServiceImpl userDetailsService, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;

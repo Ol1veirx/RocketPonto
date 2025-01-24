@@ -1,5 +1,6 @@
 package com.rocket.rocketponto.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class User implements UserDetails {
     private LocalDateTime createdDate = LocalDateTime.now();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<PointRecord> pointRecord;
 
     public Long getId() {

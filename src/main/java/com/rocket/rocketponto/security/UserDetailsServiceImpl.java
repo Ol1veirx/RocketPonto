@@ -1,7 +1,8 @@
-package com.rocket.rocketponto.service;
+package com.rocket.rocketponto.security;
 
 import com.rocket.rocketponto.entity.User;
 import com.rocket.rocketponto.repositories.UserRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,9 +24,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), // Usa o email como username
-                user.getPassword(), // Senha já criptografada
-                user.getAuthorities() // Retorna os papéis (roles) do usuário
+                user.getEmail(),
+                user.getPassword(),
+                user.getAuthorities()
         );
+    }
+
+    public User getAuthenticatedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if(principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
     }
 }
