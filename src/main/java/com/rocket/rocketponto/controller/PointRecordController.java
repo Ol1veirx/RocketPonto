@@ -26,8 +26,8 @@ public class PointRecordController {
     }
 
     @PostMapping("/save")
-    public void savePointRecord(@RequestBody Long userId) {
-        User user = userRepository.findById(userId).get();
+    public void savePointRecord() {
+        User user = userDetailsService.getAuthenticatedUser();
         pointRecordService.savePointRecord(user);
     }
 
