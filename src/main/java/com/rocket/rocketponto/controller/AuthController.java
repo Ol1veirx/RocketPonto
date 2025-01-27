@@ -2,7 +2,9 @@ package com.rocket.rocketponto.controller;
 
 import com.rocket.rocketponto.dto.AuthRequestDTO;
 import com.rocket.rocketponto.dto.RegisterRequestDTO;
+import com.rocket.rocketponto.entity.Role;
 import com.rocket.rocketponto.entity.User;
+import com.rocket.rocketponto.repositories.RoleRepository;
 import com.rocket.rocketponto.repositories.UserRepository;
 import com.rocket.rocketponto.security.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,12 +28,14 @@ public class AuthController {
     private final com.rocket.rocketponto.security.UserDetailsServiceImpl userDetailsService;
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final RoleRepository roleRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, com.rocket.rocketponto.security.UserDetailsServiceImpl userDetailsService, UserRepository userRepository) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, com.rocket.rocketponto.security.UserDetailsServiceImpl userDetailsService, UserRepository userRepository, RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userDetailsService = userDetailsService;
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @PostMapping("/login")
@@ -61,6 +66,9 @@ public class AuthController {
         user.setDepartment(registerRequest.getDepartment());
         user.setActive(true);
         user.setCreatedDate(LocalDateTime.now());
+
+        Role role = roleRepository.findByName("ROLE_OPERATOR");
+        user.setRoles(Set.of(role));
 
         userRepository.save(user);
 

@@ -7,6 +7,7 @@ import com.rocket.rocketponto.repositories.UserRepository;
 import com.rocket.rocketponto.security.UserDetailsServiceImpl;
 import com.rocket.rocketponto.services.PointRecordService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,12 +26,14 @@ public class PointRecordController {
         this.userDetailsService = userDetailsService;
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERATOR')")
     @PostMapping("/save")
     public void savePointRecord() {
         User user = userDetailsService.getAuthenticatedUser();
         pointRecordService.savePointRecord(user);
     }
 
+    @PreAuthorize("hasRole('ADMIN') or hasRole('OPERATOR')")
     @GetMapping("/list-by-user")
     public ResponseEntity<List<ListPointRecordDTO>> listRecordPointsByUser() {
         User user = userDetailsService.getAuthenticatedUser();
