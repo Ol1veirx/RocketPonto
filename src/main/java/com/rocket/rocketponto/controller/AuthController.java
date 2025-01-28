@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 
 @RestController
@@ -49,7 +50,7 @@ public class AuthController {
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
         User userId = userRepository.findByEmail(authRequest.getUsername()).get();
-        return jwtUtil.generateToken(userDetails.getUsername(), userId.getId());
+        return jwtUtil.generateToken(userDetails.getUsername(), userId.getId(), new ArrayList<>(userId.getRoles()));
     }
 
     @PostMapping("/register")

@@ -40,4 +40,11 @@ public class PointRecordController {
         List<ListPointRecordDTO> pointRecords = pointRecordService.listRecordPointsByUser(user.getId());
         return ResponseEntity.ok(pointRecords);
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/get-all-point-records")
+    public ResponseEntity<List<ListPointRecordDTO>> getAllPointRecords() {
+        List<ListPointRecordDTO> pointRecords = pointRecordService.getAllPointRecords();
+        return ResponseEntity.ok(pointRecords);
+    }
 }

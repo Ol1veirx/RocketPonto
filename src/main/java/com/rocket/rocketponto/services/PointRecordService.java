@@ -54,10 +54,20 @@ public class PointRecordService {
 
         List<PointRecord> pointsRecords = pointRecordRepository.findByUser(user);
 
-        return pointsRecords.stream()
+        return getListPointRecordDTOS(pointsRecords);
+    }
+
+    public List<ListPointRecordDTO> getAllPointRecords() {
+        List<PointRecord> pointRecords = pointRecordRepository.findAll();
+        return getListPointRecordDTOS(pointRecords);
+    }
+
+    private List<ListPointRecordDTO> getListPointRecordDTOS(List<PointRecord> pointRecords) {
+        return pointRecords.stream()
                 .map(pointRecord -> {
                     ListPointRecordDTO dto = new ListPointRecordDTO();
                     dto.setId(pointRecord.getId());
+                    dto.setNameUser(pointRecord.getUser().getName());
                     dto.setEntryDateHour(pointRecord.getEntryDateHour());
                     dto.setExitDateHour(pointRecord.getExitDateHour());
                     dto.setPointRecordStatus(pointRecord.getPointRecordStatus());

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ListPointRecordDTO {
     private Long id;
     private LocalDateTime entryDateHour;
+    private String nameUser;
     private LocalDateTime exitDateHour;
     private String justification;
     private PointRecordStatus pointRecordStatus;
@@ -20,11 +21,13 @@ public class ListPointRecordDTO {
                               LocalDateTime entryDateHour,
                               LocalDateTime exitDateHour,
                               String justification,
+                              String nameUser,
                               PointRecordStatus pointRecordStatus) {
         this.id = id;
         this.entryDateHour = entryDateHour;
         this.exitDateHour = exitDateHour;
         this.justification = justification;
+        this.nameUser = nameUser;
     }
 
     public ListPointRecordDTO() {}
@@ -70,5 +73,13 @@ public class ListPointRecordDTO {
 
     public void setPointRecordStatus(PointRecordStatus pointRecordStatus) {
         this.pointRecordStatus = pointRecordStatus;
+    }
+
+    public String getNameUser() {
+        return nameUser;
+    }
+
+    public void setNameUser(String nameUser) {
+        this.nameUser = nameUser;
     }
 }
