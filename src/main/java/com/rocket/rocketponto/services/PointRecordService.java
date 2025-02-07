@@ -53,12 +53,13 @@ public class PointRecordService {
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         List<PointRecord> pointsRecords = pointRecordRepository.findByUser(user);
-
+        pointsRecords.sort((pr1, pr2) -> pr2.getEntryDateHour().compareTo(pr1.getEntryDateHour()));
         return getListPointRecordDTOS(pointsRecords);
     }
 
     public List<ListPointRecordDTO> getAllPointRecords() {
         List<PointRecord> pointRecords = pointRecordRepository.findAll();
+        pointRecords.sort((pr1, pr2) -> pr2.getEntryDateHour().compareTo(pr1.getEntryDateHour()));
         return getListPointRecordDTOS(pointRecords);
     }
 
