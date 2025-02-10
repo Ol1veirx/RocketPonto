@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,17 +34,18 @@ public class PointRecordService {
 
         PointRecord lastPointRecord = pointRecordRepository.findTopByUserOrderByEntryDateHourDesc(userExists);
 
-
+        ZonedDateTime entryDateTime = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
 
         if (lastPointRecord == null || lastPointRecord.getExitDateHour() != null) {
             PointRecord pointRecord = new PointRecord();
             pointRecord.setUser(userExists);
-            pointRecord.setEntryDateHour(LocalDateTime.now());
+            pointRecord.setEntryDateHour(entryDateTime.toLocalDateTime());
             pointRecord.setExitDateHour(null);
             pointRecord.setPointRecordStatus(PointRecordStatus.IN_PROGRESS);
             return pointRecordRepository.save(pointRecord);
         } else {
-            lastPointRecord.setExitDateHour(LocalDateTime.now());
+            ZonedDateTime exitDateTime = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
+            lastPointRecord.setExitDateHour(exitDateTime.toLocalDateTime());
             lastPointRecord.setPointRecordStatus(PointRecordStatus.COMPLETED);
             return pointRecordRepository.save(lastPointRecord);
         }
