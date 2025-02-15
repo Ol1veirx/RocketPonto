@@ -8,4 +8,5 @@ RUN mvn clean package -DskipTests
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/RocketPonto-0.0.1-SNAPSHOT.jar app.jar
+COPY src/main/resources/application.properties /app/config/application.properties
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -11,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/point-record")
@@ -28,9 +29,10 @@ public class PointRecordController {
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('OPERATOR')")
     @PostMapping("/save")
-    public void savePointRecord() {
+    public void savePointRecord(@RequestBody Map<String, String> request) {
+        String description = request.get("description");
         User user = userDetailsService.getAuthenticatedUser();
-        pointRecordService.savePointRecord(user);
+        pointRecordService.savePointRecord(user, description);
     }
 
     @PreAuthorize("hasRole('ADMIN') or hasRole('OPERATOR')")

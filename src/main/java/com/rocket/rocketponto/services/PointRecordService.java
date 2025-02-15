@@ -28,7 +28,7 @@ public class PointRecordService {
         this.userRepository = userRepository;
     }
 
-    public PointRecord savePointRecord(User user) {
+    public PointRecord savePointRecord(User user, String description) {
         User userExists = userRepository.findById(user.getId())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
@@ -44,9 +44,14 @@ public class PointRecordService {
             pointRecord.setPointRecordStatus(PointRecordStatus.IN_PROGRESS);
             return pointRecordRepository.save(pointRecord);
         } else {
+            if (description == null || description.isEmpty()) {
+                throw new IllegalArgumentException("Descrição é obrigatŕoria");
+            }
             ZonedDateTime exitDateTime = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
             lastPointRecord.setExitDateHour(exitDateTime.toLocalDateTime());
+            lastPointRecord.setExitDateHour(LocalDateTime.now());
             lastPointRecord.setPointRecordStatus(PointRecordStatus.COMPLETED);
+            lastPointRecord.setDescription(description);
             return pointRecordRepository.save(lastPointRecord);
         }
     }
@@ -75,6 +80,7 @@ public class PointRecordService {
                     dto.setEntryDateHour(pointRecord.getEntryDateHour());
                     dto.setExitDateHour(pointRecord.getExitDateHour());
                     dto.setPointRecordStatus(pointRecord.getPointRecordStatus());
+                    dto.setDescription(pointRecord.getDescription());
                     dto.setJustification(pointRecord.getJustification() != null ? pointRecord.getJustification().getDescription() : null);
                     return dto;
                 })

@@ -22,7 +22,7 @@ services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile  # Certifique-se de que o Dockerfile está no mesmo diretório que o docker-compose.yml
+      dockerfile: Dockerfile
     container_name: rocketponto-backend
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/rocketponto

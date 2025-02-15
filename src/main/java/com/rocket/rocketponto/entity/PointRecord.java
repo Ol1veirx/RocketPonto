@@ -32,6 +32,9 @@ public class PointRecord {
     @Enumerated(EnumType.STRING)
     private PointRecordStatus pointRecordStatus;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     @OneToOne(mappedBy = "pointRecord", cascade = CascadeType.ALL)
     private Justification justification;
 
@@ -81,5 +84,13 @@ public class PointRecord {
 
     public void setPointRecordStatus(PointRecordStatus pointRecordStatus) {
         this.pointRecordStatus = pointRecordStatus;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

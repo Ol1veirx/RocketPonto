@@ -15,6 +15,7 @@ public class ListPointRecordDTO {
     private String nameUser;
     private LocalDateTime exitDateHour;
     private String justification;
+    private String description;
     private PointRecordStatus pointRecordStatus;
 
     public ListPointRecordDTO(Long id,
@@ -22,12 +23,14 @@ public class ListPointRecordDTO {
                               LocalDateTime exitDateHour,
                               String justification,
                               String nameUser,
+                              String description,
                               PointRecordStatus pointRecordStatus) {
         this.id = id;
         this.entryDateHour = entryDateHour;
         this.exitDateHour = exitDateHour;
         this.justification = justification;
         this.nameUser = nameUser;
+        this.description = description;
     }
 
     public ListPointRecordDTO() {}
@@ -81,5 +84,13 @@ public class ListPointRecordDTO {
 
     public void setNameUser(String nameUser) {
         this.nameUser = nameUser;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
