@@ -49,7 +49,6 @@ public class PointRecordService {
             }
             ZonedDateTime exitDateTime = ZonedDateTime.now(ZoneId.of("America/Sao_Paulo"));
             lastPointRecord.setExitDateHour(exitDateTime.toLocalDateTime());
-            lastPointRecord.setExitDateHour(LocalDateTime.now());
             lastPointRecord.setPointRecordStatus(PointRecordStatus.COMPLETED);
             lastPointRecord.setDescription(description);
             return pointRecordRepository.save(lastPointRecord);
