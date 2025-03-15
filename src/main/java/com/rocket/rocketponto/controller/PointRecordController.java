@@ -6,6 +6,10 @@ import com.rocket.rocketponto.entity.User;
 import com.rocket.rocketponto.repositories.UserRepository;
 import com.rocket.rocketponto.security.UserDetailsServiceImpl;
 import com.rocket.rocketponto.services.PointRecordService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -45,8 +49,13 @@ public class PointRecordController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/get-all-point-records")
-    public ResponseEntity<List<ListPointRecordDTO>> getAllPointRecords() {
-        List<ListPointRecordDTO> pointRecords = pointRecordService.getAllPointRecords();
+    public ResponseEntity<Page<ListPointRecordDTO>> getAllPointRecords(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("entryDateHour").descending());
+        Page<ListPointRecordDTO> pointRecords = pointRecordService.getAllPointRecords(pageable);
+
         return ResponseEntity.ok(pointRecords);
     }
 }

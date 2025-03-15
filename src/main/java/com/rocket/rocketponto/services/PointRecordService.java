@@ -8,6 +8,8 @@ import com.rocket.rocketponto.repositories.PointRecordRepository;
 import com.rocket.rocketponto.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -64,10 +66,9 @@ public class PointRecordService {
         return getListPointRecordDTOS(pointsRecords);
     }
 
-    public List<ListPointRecordDTO> getAllPointRecords() {
-        List<PointRecord> pointRecords = pointRecordRepository.findAll();
-        pointRecords.sort((pr1, pr2) -> pr2.getEntryDateHour().compareTo(pr1.getEntryDateHour()));
-        return getListPointRecordDTOS(pointRecords);
+    public Page<ListPointRecordDTO> getAllPointRecords(Pageable pageable) {
+        Page<PointRecord> pointRecords = pointRecordRepository.findAll(pageable);
+        return getListAllPointRecordDTOS(pointRecords);
     }
 
     private List<ListPointRecordDTO> getListPointRecordDTOS(List<PointRecord> pointRecords) {
@@ -84,5 +85,19 @@ public class PointRecordService {
                     return dto;
                 })
                 .collect(Collectors.toList());
+    }
+
+    private Page<ListPointRecordDTO> getListAllPointRecordDTOS(Page<PointRecord> pointRecordsPage) {
+        return pointRecordsPage.map(pointRecord -> {
+            ListPointRecordDTO dto = new ListPointRecordDTO();
+            dto.setId(pointRecord.getId());
+            dto.setNameUser(pointRecord.getUser().getName());
+            dto.setEntryDateHour(pointRecord.getEntryDateHour());
+            dto.setExitDateHour(pointRecord.getExitDateHour());
+            dto.setPointRecordStatus(pointRecord.getPointRecordStatus());
+            dto.setDescription(pointRecord.getDescription());
+            dto.setJustification(pointRecord.getJustification() != null ? pointRecord.getJustification().getDescription() : null);
+            return dto;
+        });
     }
 }
